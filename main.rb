@@ -27,10 +27,22 @@ end
 # Gonna see if this works. Ctrl C does not seem like a good way to end a bot so I
 # think I will gracefully stop it
 client.slash("stop", "[owner only] shutting down") do |interaction|
-  interaction.post("coming soon, win update main.rb already :rage:", ephemeral: true)
-  puts message.author.id
+  if interaction.target.id === ENV["OWNER"]
+	puts "peaceful shutdown initiated"
+	interaction.post("ok, shutting down, goodbye :sleeping:", ephemeral: false)
+	exit
+  else
+	interaction.post("what in the buck cluck fuck goes through someones mind to make you think you can run this command", ephemeral: false)
+  end
 end
 
+client.slash("am-i-win", "tells you whether the bot thinks you are win or not") do |interaction|
+  if interaction.target.id === ENV["OWNER"]
+	interaction.post("certified win moment", ephemeral: false)
+  else
+	interaction.post("certified not win moment", ephemeral: false)
+  end
+end
 client.once :standby do
   puts "ight its go time!! logged in as #{client.user}"  # Prints username of logged in user
   client.update_presence(status: :dnd)
