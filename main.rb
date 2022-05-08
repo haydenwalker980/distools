@@ -110,7 +110,7 @@ client.on :message do |message|
   output = `#{run}`
   unless output.nil?
      output = output.wait if output.is_a? Async::Task
-     message.channel.post("output:\n```\n#{output}\n```")
+     message.reply embed: Discorb::Embed.new("Output of command #{run}", "```\n#{systemUsername} $ #{run}\n#{output}\n```", color: Discorb::Color.from_rgb(201, 0, 0))
   end
 rescue Exception => e # rubocop:disable Lint/RescueException
   message.reply("uh oh something went wrong check ya logs")
