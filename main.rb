@@ -110,7 +110,7 @@ client.on :message do |message|
   output = `#{run}`
   unless output.nil?
      output = output.wait if output.is_a? Async::Task
-     message.channel.post("output:\n#{output.inspect[...1990]}")
+     message.channel.post("output:\n```\n#{output}\n```")
   end
 rescue Exception => e # rubocop:disable Lint/RescueException
   message.reply("uh oh something went wrong check ya logs")
