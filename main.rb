@@ -16,7 +16,7 @@ friendGuilds = [961703572741951518,972546971460059197]
 botDescription = "Hosted instance of distools used for development."
 botVersion = "1.2"
 commit = `git rev-parse --short HEAD`
-commitMsg = `git log --format=%B -n 1`
+commitMsg = `git show-branch --no-name`
 
 File.foreach("index.txt") { |line| puts line }
 puts "loaded bot owners: #{botOwners}"
