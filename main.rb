@@ -80,7 +80,7 @@ client.on :message do |message|
   next unless message.content.start_with?("dist.eval ")
 
   unless botOwners.include?(message.author.id)
-    message.reply("No. Just no.")
+    message.reply embed: Discorb::Embed.new("Uhhh", "No.", color: Discorb::Color.from_rgb(201, 0, 0))
     next
   end
 
@@ -134,9 +134,9 @@ end
 
 client.slash("am-i-a-dev", "tells you whether the bot thinks you are a dev or not") do |interaction|
   if botOwners.include?(interaction.target.id) === true
-	interaction.post("certified owner moment", ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("The results are in!!", "You are an owner.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
   else
-	interaction.post("certified not owner moment", ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("The results are in!!", "You are not an owner.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
   end
 end
 
