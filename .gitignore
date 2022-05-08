@@ -12,4 +12,5 @@
 
 # don't ship .env, use .env.sample
 .env
-
+# test.txt is for locally testing file sending, we don't need it in the git repository
+test.txt
