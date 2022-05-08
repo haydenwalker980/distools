@@ -44,10 +44,8 @@ client.on :ready do
 end
 
 # Application commands
-#client.user_command("hello") do |interaction, user|
-#  interaction.post("`world`\n\n`distools` by Winfinity\#1252\n`you are: #{user.name}`\n`ruby ver: #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}`\n`discorb ver: #{Discorb::VERSION}`\n`OS: #{uname[:sysname]} #{uname[:release]}`\n`running as: #{systemUsername}`", embed: Discorb::Embed.new())
-#end
 
+# guild whois
 client.slash("guild", "returns guild information") do |interaction|
   if friendGuilds.include?(interaction.guild.id) === true
 	interaction.post(embed: Discorb::Embed.new("Guild information", "This server is a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nGuild description:\n```\n#{interaction.guild.description}\n```\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)

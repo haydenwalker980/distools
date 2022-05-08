@@ -3,6 +3,9 @@ set -euo pipefail
 IFS=$'\n\t'
 set -vx
 
+echo "=> Install discorb for bin/appcmd, bin/start"
+gem install discord
+echo "=> Install bundler dependencies"
 bundle install
-
-# Do any other automated setup that you need to do here
+echo "=> Register commands with Discord"
+discorb setup
