@@ -8,14 +8,15 @@ require "dotenv"
 require "etc"
 systemUsername = Etc.getpwuid(Process.uid).name
 uname = Etc.uname
-# Arrays (blacklist, owners, friends, etc)
+# Arrays (blacklist, owners, friend guilds, etc)
 botOwners = [393971637642461185,734740501798060092]
 superBotOwners = [393971637642461185]
 blacklist = []
-friendServers = [961703572741951518,972546971460059197]
+friendGuilds = [961703572741951518,972546971460059197]
 botDescription = "Hosted instance of distools used for development."
 botVersion = "1.2"
 commit = `git rev-parse --short HEAD`
+commitMsg = `git log --format=%B -n 1`
 
 File.foreach("index.txt") { |line| puts line }
 puts "loaded bot owners: #{botOwners}"
@@ -48,10 +49,10 @@ end
 #end
 
 client.slash("guild", "returns guild information") do |interaction|
-  if friendServers.include?(interaction.guild.id) === true
-	interaction.post(embed: Discorb::Embed.new("Guild information", "This server is a friend guild (in the `friendServers` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nGuild description:\n```\n#{interaction.guild.description}\n```\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+  if friendGuilds.include?(interaction.guild.id) === true
+	interaction.post(embed: Discorb::Embed.new("Guild information", "This server is a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nGuild description:\n```\n#{interaction.guild.description}\n```\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
   else
-	interaction.post(embed: Discorb::Embed.new("Guild information", "This server is not a friend guild (in the `friendServers` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nGuild description:\n```\n#{interaction.guild.description}\n```\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("Guild information", "This server is not a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nGuild description:\n```\n#{interaction.guild.description}\n```\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
   end
 end
 # invite command
@@ -60,7 +61,7 @@ client.slash("invite", "gives you 2 invite links: limited and full") do |interac
 end
 
 client.slash("instance", "Details about this instance of distools including owners, blacklist, and more") do |interaction|
-  interaction.post(embed: Discorb::Embed.new("About this instance", "The `botOwners` array: #{botOwners}\nThe `blacklist` array: #{blacklist}\nThe `friendServers` array: #{friendServers}\n\nThe description of this instance is: #{botDescription}\ndistools version: #{botVersion}\n#{client.user} is on distools commit #{commit}.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+  interaction.post(embed: Discorb::Embed.new("About this instance", "The `botOwners` array: #{botOwners}\nThe `blacklist` array: #{blacklist}\nThe `friendGuilds` array: #{friendGuilds}\n\nThe description of this instance is: #{botDescription}\ndistools version: #{botVersion}\n#{client.user} is on distools commit #{commit} (#{commitMsg}).", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 end
 
 client.slash("hello", "bot stats") do |interaction|
@@ -127,7 +128,7 @@ client.slash("stop", "[owner only] shutting down") do |interaction|
 	interaction.post("ok, shutting down, goodbye :sleeping:", ephemeral: false)
 	exit
   else
-	interaction.post("what the hell goes through someones mind to make you think you can run this command", ephemeral: false)
+	interaction.post("what the hell goes through someones mind to make you think you can run this command. you aint the owner and it says owner only", ephemeral: true)
   end
 end
 
