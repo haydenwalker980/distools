@@ -1,0 +1,6 @@
+#!/bin/bash
+# Register app commands with the app. Requires
+# ENV['TOKEN'] to be set
+echo "Registering"
+discorb setup
+echo "All done, you can run ruby main.rb or bin/start."
