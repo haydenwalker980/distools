@@ -21,7 +21,7 @@ commitMsg = `git log --format=%B -n 1`
 File.foreach("index.txt") { |line| puts line }
 puts "loaded bot owners: #{botOwners}"
 puts "loaded blacklist: #{blacklist}"
-puts "loaded friend servers: #{friendServers}"
+puts "loaded friend servers: #{friendGuilds}"
 Dotenv.load  # Loads .env file
 puts "loaded .env and thus i am proceeding"
 client = Discorb::Client.new  # Create client for connecting to Discord
