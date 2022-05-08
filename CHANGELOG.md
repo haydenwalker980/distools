@@ -4,3 +4,7 @@
 - eval and exec
 - Guild and user information
 - Detect commit
+
+## [1.2] - 2022-05-08
+
+- Finally embed help

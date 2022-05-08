@@ -12,7 +12,7 @@ uname = Etc.uname
 botOwners = [393971637642461185,734740501798060092]
 superBotOwners = [393971637642461185]
 blacklist = []
-friendServers = [961703572741951518]
+friendServers = [961703572741951518,972546971460059197]
 botDescription = "Hosted instance of distools used for development."
 botVersion = "1.2"
 commit = `git rev-parse --short HEAD`
@@ -59,8 +59,8 @@ client.slash("invite", "gives you 2 invite links: limited and full") do |interac
   interaction.post(embed: Discorb::Embed.new("Invite me!", "I have two invite links. One is the limited version and one is full admin permissions.\n\n[Limited](https://discord.com/api/oauth2/authorize?client_id=972452053697843240&permissions=1634771397751&scope=applications.commands%20bot)\n[Full](https://discord.com/api/oauth2/authorize?client_id=972452053697843240&permissions=8&scope=applications.commands%20bot)", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 end
 
-client.slash("managers", "gives you information about the management of the bot") do |interaction|
-  interaction.post(embed: Discorb::Embed.new("Bot management", "The `botOwners` array: #{botOwners}\nThe `blacklist` array: #{blacklist}\nThe `friendServers` array: #{friendServers}\n\nThe description of this instance is: #{botDescription}\n#{client.user} is on commit #{commit}", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+client.slash("instance", "Details about this instance of distools including owners, blacklist, and more") do |interaction|
+  interaction.post(embed: Discorb::Embed.new("About this instance", "The `botOwners` array: #{botOwners}\nThe `blacklist` array: #{blacklist}\nThe `friendServers` array: #{friendServers}\n\nThe description of this instance is: #{botDescription}\ndistools version: #{botVersion}\n#{client.user} is on distools commit #{commit}.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 end
 
 client.slash("hello", "bot stats") do |interaction|
@@ -68,8 +68,10 @@ client.slash("hello", "bot stats") do |interaction|
 end
 
 client.slash("help", "gives you my commands") do |interaction|
-  interaction.post("Hi, I'm `distools` a bot made with :heart: by **Winfinity**.\nAs of right now my only two commands are `help` and `hello` but there will be more soon!!", ephemeral: false)
+  interaction.post(embed: Discorb::Embed.new("Help | distools #{botVersion}", "I am Distools. A bot made with :heart: (+ caffiene and Ruby) by Winfinity#1252.\n\n**Command List**\n`/hello` - (Interaction) Gives you a list of bot stats.\n`/instance` - (Interaction) Gives you information about this distools instance.\n`/help` - (Interaction) Lists commands.\n`/stop` - (Interaction, bot owners only) Stops the bot using `exit`.\n`/guild` - (Interaction) Guild information.\n`/whoami` - (Interaction) You are #{interaction.target.name}. Seriously, this gives you more information.\n`/why-god-why` - (Interaction, bot owners only) Tests everything. Template command.\n`dist.eval` - (Bot owners only) Evaluates a piece of ruby code.\n`dist.exec` - (\"Super\" bot owners only) Executes a script on the machine distools is running on (via the backticks)\n`/am-i-a-dev` - (Interaction) Tells you whether you are listed as a dev or not.\n`/invite` - (Interaction) Returns invite links.\n\nDistools is open source (the code is [right here](https://github.com/haydenwalker980)) - meaning you are free to use, modify, and distribute it. If you enjoy distools and want to keep the lights on when we inevitably move to a server, [please consider contributing](https://liberapay.com/Win) via liberapay. To have your donation count against an indicator in user information, leave your Discord ID in your liberapay description.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 end
+
+# client.on :guild_join do |message|
 
 # Eval command maybe?
 client.on :message do |message|
@@ -125,15 +127,15 @@ client.slash("stop", "[owner only] shutting down") do |interaction|
 	interaction.post("ok, shutting down, goodbye :sleeping:", ephemeral: false)
 	exit
   else
-	interaction.post("what in the buck cluck fuck goes through someones mind to make you think you can run this command", ephemeral: false)
+	interaction.post("what the hell goes through someones mind to make you think you can run this command", ephemeral: false)
   end
 end
 
 client.slash("am-i-a-dev", "tells you whether the bot thinks you are a dev or not") do |interaction|
   if botOwners.include?(interaction.target.id) === true
-	interaction.post("certified dev moment", ephemeral: false)
+	interaction.post("certified owner moment", ephemeral: false)
   else
-	interaction.post("certified not dev person moment", ephemeral: false)
+	interaction.post("certified not owner moment", ephemeral: false)
   end
 end
 
