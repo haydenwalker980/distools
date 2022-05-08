@@ -61,7 +61,7 @@ client.slash("invite", "gives you 2 invite links: limited and full") do |interac
 end
 
 client.slash("instance", "Details about this instance of distools including owners, blacklist, and more") do |interaction|
-  interaction.post(embed: Discorb::Embed.new("About this instance", "The `botOwners` array: #{botOwners}\nThe `blacklist` array: #{blacklist}\nThe `friendGuilds` array: #{friendGuilds}\n\nThe description of this instance is: #{botDescription}\ndistools version: #{botVersion}\n#{client.user} is on distools commit #{commit} (#{commitMsg}).", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+  interaction.post(embed: Discorb::Embed.new("About this instance", "The `botOwners` array: #{botOwners}\nThe `blacklist` array: #{blacklist}\nThe `friendGuilds` array: #{friendGuilds}\n\nThe description of this instance is: #{botDescription}\ndistools version: #{botVersion}\n#{client.user} is on distools commit #{commit} with the commit message:\n```\n#{commitMsg}```", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 end
 
 client.slash("hello", "bot stats") do |interaction|
