@@ -14,7 +14,7 @@ superBotOwners = [393971637642461185]
 blacklist = []
 friendGuilds = [961703572741951518,972546971460059197]
 botDescription = "Hosted instance of distools used for development."
-botVersion = "1.2"
+botVersion = "1.3"
 commit = `git rev-parse --short HEAD`
 commitMsg = `git show-branch --no-name`
 
@@ -48,9 +48,15 @@ end
 # guild whois
 client.slash("guild", "returns guild information") do |interaction|
   if friendGuilds.include?(interaction.guild.id) === true
+	if #{interaction.guild.description}
 	interaction.post(embed: Discorb::Embed.new("Guild information", "This server is a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nGuild description:\n```\n#{interaction.guild.description}\n```\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	else
+	interaction.post(embed: Discorb::Embed.new("Guild information", "This server is a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
   else
+	if #{interaction.guild.description}
 	interaction.post(embed: Discorb::Embed.new("Guild information", "This server is not a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nGuild description:\n```\n#{interaction.guild.description}\n```\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	else
+	interaction.post(embed: Discorb::Embed.new("Guild information", "This server is not a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
   end
 end
 # invite command

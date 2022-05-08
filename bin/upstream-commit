@@ -1,0 +1,6 @@
+#!/bin/bash
+# Commit your changes upstream. Must have an account on gh.windev.systems!
+echo "=> Committing to mirror (github.com)"
+git commit mirror main
+echo "=> Committing upstream (gh.windev.systems)"
+git commit origin main
