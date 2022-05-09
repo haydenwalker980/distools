@@ -49,15 +49,15 @@ end
 client.slash("guild", "returns guild information") do |interaction|
   if friendGuilds.include?(interaction.guild.id) === true
 	if interaction.guild.description.nil? === false
-	interaction.post(embed: Discorb::Embed.new("Guild information", "Guild name: #{interactions.guild.name}\nThis server is a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nGuild description:\n```\n#{interaction.guild.description}\n```\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("Guild information", "Guild name: #{interaction.guild.name}\nThis server is a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nGuild description:\n```\n#{interaction.guild.description}\n```\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 	else
-	interaction.post(embed: Discorb::Embed.new("Guild information", "Guild name: #{interactions.guild.name}\nThis server is a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("Guild information", "Guild name: #{interaction.guild.name}\nThis server is a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 	end
   else
 	if interaction.guild.description.nil? === false
-	interaction.post(embed: Discorb::Embed.new("Guild information", "Guild name: #{interactions.guild.name}\nThis server is not a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nGuild description:\n```\n#{interaction.guild.description}\n```\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("Guild information", "Guild name: #{interaction.guild.name}\nThis server is not a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nGuild description:\n```\n#{interaction.guild.description}\n```\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 	else
-	interaction.post(embed: Discorb::Embed.new("Guild information", "Guild name: #{interactions.guild.name}\nThis server is not a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("Guild information", "Guild name: #{interaction.guild.name}\nThis server is not a friend guild (in the `friendGuilds` array)\nFeatures: `#{interaction.guild.features}`\nGuild ID: `#{interaction.guild.id}`\nMember count: #{interaction.guild.member_count}\nBot joined (UTC): `#{interaction.guild.joined_at}`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
   	end
   end
 end
