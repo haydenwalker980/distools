@@ -12,5 +12,5 @@
 
 # don't ship .env, use .env.sample
 .env
-# test.txt is for locally testing file sending, we don't need it in the git repository
-test.txt
+# distools.log is where logs of DEBUG level get outputted to. could expose something, DO NOT SHIP
+distools.log

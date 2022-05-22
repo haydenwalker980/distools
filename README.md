@@ -1,9 +1,18 @@
 # Distools
-discord bot in ruby i guess i dont fucking know
+Very customizable Discord bot written in Discorb.
 
-## Development
+## Pardon the dust!
 
-listen ok just run `bundle install` copy .env.sample to .env and edit it with your values then finally run `ruby main.rb`
+Distools is undergoing a massive rewrite. It'll still be open source, it'll just be able to do more.
+
+## Development Quickstart
+
+- You need Discorb installed, `gem install discorb`
+- Run `bundle install`
+- Copy .env.sample to .env, and fill in the values (only TOKEN and CLIENT_ID are required)
+- After that, `discorb setup`.
+- Modify `main.rb` and its variables (soon to be config/names.rb, config/perms.rb) to what you want
+- `bin/start` and enjoy.
 
 ## Code of Conduct
 
