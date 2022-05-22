@@ -9,7 +9,7 @@ Distools is undergoing a massive rewrite. It'll still be open source, it'll just
 
 - You need Discorb installed, `gem install discorb`
 - Run `bundle install`
-- Copy .env.sample to .env, and fill in the values (only TOKEN and CLIENT_ID are required)
+- Copy .env.sample to .env, and fill in the values (only TOKEN and ID are required)
 - After that, `discorb setup`.
 - Modify `main.rb` and its variables (soon to be config/names.rb, config/perms.rb) to what you want
 - `bin/start` and enjoy.
