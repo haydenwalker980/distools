@@ -17,3 +17,9 @@
 - Prettify exec
 - More in bin/setup
 - bin/upstream-commit
+
+# Rewrite
+
+## [2.0] - 2022-05-22
+- MongoDB connection
+- **BREAKING CHANGE:** config/perms.rb hosts permissions config, instead of main.rb (via a module that has a sh*t ton of variables.

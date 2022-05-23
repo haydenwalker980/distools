@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+# create sum collections.
+require "mongo"
+client = Mongo::Client.new("mongodb://127.0.0.1:27017/distools")
+economydata = client[:economy, capped: false]
+guildsettings = client[:guildSettings, capped: false]
+devalerts = client[:devAlerts, capped: false]
+economydata.create
+guildsettings.create
+devalerts.create

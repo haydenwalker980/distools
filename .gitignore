@@ -14,3 +14,5 @@
 .env
 # distools.log is where logs of DEBUG level get outputted to. could expose something, DO NOT SHIP
 distools.log
+# mongod.logs is mongoDB logs
+mongod.logs
