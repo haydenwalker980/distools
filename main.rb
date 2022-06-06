@@ -9,7 +9,9 @@ require "etc"
 require "log4r"
 require "mongo"
 require_relative "config/perms"
-database = Mongo::Client.new("mongodb://127.0.0.1:27017/distools")
+require_relative "config/mongo"
+require_relative "config/strings"
+database = Mongo::Client.new(DataConn::URI)
 puts "(Maybe) connected to Mongo."
 log = Log4r::Logger.new("discorb")
 log.add Log4r::FileOutputter.new("filelog",
@@ -21,11 +23,9 @@ log.add Log4r::IOOutputter.new("stderr", $stderr,
 systemUsername = Etc.getpwuid(Process.uid).name
 uname = Etc.uname
 friendGuilds = [961703572741951518,972546971460059197]
-botDescription = "Hosted instance of distools used for development."
 botVersion = "2.1 RW"
 commit = `git rev-parse --short HEAD`
 commitMsg = `git show-branch --no-name`
-blacklistContactPoint = "<@393971637642461185>"
 
 File.foreach("index.txt") { |line| puts line }
 puts "loaded bot owners: #{BotPerms::BOTOWNERS}"
@@ -58,7 +58,7 @@ end
 client.slash("guild", "returns guild information") do |interaction|
 # Before absolutely anything run the Blacklist Test
  if BotPerms::BLACKLISTED.include?(interaction.target.id) === true
-	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{blacklistContactPoint} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
  else
   if friendGuilds.include?(interaction.guild.id) === true
 	if interaction.guild.description.nil? === false
@@ -80,23 +80,31 @@ end
 # invite command
 client.slash("invite", "gives you 2 invite links: limited and full") do |interaction|
  if BotPerms::BLACKLISTED.include?(interaction.target.id) === true
-	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{blacklistContactPoint} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
  else
   interaction.post(embed: Discorb::Embed.new("Invite me!", "I have two invite links. One is the limited version and one is full admin permissions.\n\n[Limited](https://discord.com/api/oauth2/authorize?client_id=#{ENV['ID']}&permissions=1634771397751&scope=applications.commands%20bot)\n[Full](https://discord.com/api/oauth2/authorize?client_id=#{ENV['ID']}&permissions=8&scope=applications.commands%20bot)", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 end
 end
 
+# best interaction ever
+client.slash("garment", "garment") do |interaction|
+ if BotPerms::BLACKLISTED.include?(interaction.target.id) === true
+	interaction.post("this is a certified not garment moment", embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)))
+ else
+	interaction.post("garment", embed: Discorb::Embed.new("garment", "garment", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+ end
+end
 client.slash("instance", "Details about this instance of distools including owners, blacklist, and more") do |interaction|
  if BotPerms::BLACKLISTED.include?(interaction.target.id) === true
-	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{blacklistContactPoint} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
  else
-  interaction.post(embed: Discorb::Embed.new("About this instance", "The `botOwners` array: #{BotPerms::botOwners}\nThe `blacklist` array: #{BotPerms::blacklist}\nThe `friendGuilds` array: #{friendGuilds}\n\nThe description of this instance is: #{botDescription}\ndistools version: #{botVersion}\n#{client.user} is on distools commit #{commit} with the commit message:\n```\n#{commitMsg}```", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+  interaction.post(embed: Discorb::Embed.new("About this instance", "The description of this instance is: #{DistoolsStr::INSTDESCRIPTION}\ndistools version: #{botVersion}\n#{client.user} is on distools commit #{commit} with the commit message:\n```\n#{commitMsg}```", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 end
 end
 
 client.slash("hello", "bot stats") do |interaction|
  if BotPerms::BLACKLISTED.include?(interaction.target.id) === true
-	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{blacklistContactPoint} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
  else
   interaction.post(embed: Discorb::Embed.new("distools #{botVersion} | hello world :)", "I am Distools, a bot made by Winfinity\#1252.", color: Discorb::Color.from_rgb(201, 0, 0), fields: [Discorb::Embed::Field.new("ruby ver", "`#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}`", inline: false), Discorb::Embed::Field.new("discorb ver", "`#{Discorb::VERSION}`", inline: false), Discorb::Embed::Field.new("OS", "`#{uname[:sysname]} #{uname[:release]}`", inline: false), Discorb::Embed::Field.new("running as user", "`#{systemUsername}`", inline: false)]), ephemeral: false)
 end
@@ -104,7 +112,7 @@ end
 
 client.slash("help", "gives you my commands") do |interaction|
  if BotPerms::BLACKLISTED.include?(interaction.target.id) === true
-	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{blacklistContactPoint} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
  else
   interaction.post(embed: Discorb::Embed.new("Help | distools #{botVersion}", "I am Distools. A bot made with :heart: (+ caffiene and Ruby) by Winfinity#1252.\n\n**Command List**\n`/hello` - (Interaction) Gives you a list of bot stats.\n`/instance` - (Interaction) Gives you information about this distools instance.\n`/help` - (Interaction) Lists commands.\n`/stop` - (Interaction, bot owners only) Stops the bot using `exit`.\n`/guild` - (Interaction) Guild information.\n`/whoami` - (Interaction) You are #{interaction.target.name}. Seriously, this gives you more information.\n`/why-god-why` - (Interaction, bot owners only) Tests everything. Template command.\n`dist.eval` - (Bot owners only) Evaluates a piece of ruby code.\n`dist.exec` - (\"Super\" bot owners only) Executes a script on the machine distools is running on (via the backticks)\n`/am-i-a-dev` - (Interaction) Tells you whether you are listed as a dev or not.\n`/invite` - (Interaction) Returns invite links.\n\nDistools is open source (the code is [right here](https://github.com/haydenwalker980)) - meaning you are free to use, modify, and distribute it. If you enjoy distools and want to keep the lights on when we inevitably move to a server, [please consider contributing](https://liberapay.com/Win) via liberapay. To have your donation count against an indicator in user information, leave your Discord ID in your liberapay description.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 end
@@ -114,7 +122,7 @@ end
 
 # Eval command maybe?
 client.on :message do |message|
-  puts "Message in #{message.guild.name} (#{message.guild.id}) from #{message.author.name} (#{message.author.id}): #{message.content}"
+#  puts "Message in #{message.guild.name} (#{message.guild.id}) from #{message.author.name} (#{message.author.id}): #{message.content}"
   next if message.author.bot?
   next unless message.content.start_with?("dist.eval ")
   unless BotPerms::BOTOWNERS.include?(message.author.id)
@@ -134,6 +142,18 @@ client.on :message do |message|
 rescue Exception => e # rubocop:disable Lint/RescueException
   message.reply embed: Discorb::Embed.new("Error!", "```rb\n#{e.full_message(highlight: false)[...1990]}\n```",
                                           color: Discorb::Color[:red])
+end
+
+client.on :message do |message|
+  next if message.author.bot?
+  next unless message.content.start_with?("dist.beta.DocTest")
+  unless BotPerms::BETATESTERS.include?(message.author.id)
+     message.reply embed: Discorb::Embed.new("Error", "you are not a `BotPerms::BETATESTER`. if you know Ruby and Mongo, contact #{DistoolsStr::BCP} in order to become one of the `BotPerms::BETATESTERS`.", color: Discorb::Color.from_rgb(201, 0, 0))
+     next
+  end
+  
+  
+  message.reply embed: Discorb::Embed.new("Fun, an unfinished command!", "you are a `BotPerms::BETATESTER` but like this command is so unfinished that it would likely make the bot commit suicide if you ran this command so I won't let you run it. it will be finished soon as a functioning economy is one of my top priorities for this bot.", color: Discorb::Color.from_rgb(201, 0, 0))
 end
 
 client.on :message do |message|
@@ -197,7 +217,7 @@ end
 
 client.slash("am-i-a-dev", "tells you whether the bot thinks you are a dev or not") do |interaction|
  if BotPerms::BLACKLISTED.include?(interaction.target.id) === true
-	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{blacklistContactPoint} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
+	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
  else
  if BotPerms::BOTOWNERS.include?(interaction.target.id) === true
 	if BotPerms::EXECUSERS.include?(interaction.target.id) === true
@@ -223,6 +243,7 @@ end
 client.once :standby do
   puts "ight its go time!! logged in as #{client.user}"  # Prints username of logged in user
   client.update_presence(status: :dnd)
+  puts "guilds: Dictionary: #{client.guilds}"
 end
 
 client.run ENV["TOKEN"]  # Starts client
