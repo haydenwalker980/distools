@@ -316,6 +316,19 @@ else
  end
 end
 end
+
+# reboot cmd
+client.slash("reboot", "Restart this horrible bot which in turn loads new commits and changes without much disruption") do |interaction|
+if BotPerms::BOTOWNERS.include?(interaction.user.id) === true
+	interaction.post("Ok be right back")
+# This is broken, needs a fix
+#	client.update_presence(Discorb::Activity.new("and undergoing process reboot, be patient :|", :playing), status: :idle)
+	# Replace the current distools process with an entirely new one
+	Kernel.exec("bin/start")
+else
+	interaction.post("I refuse.", ephemeral: false)
+end
+end
 client.once :standby do
   puts "ight its go time!! logged in as #{client.user}"  # Prints username of logged in user
   client.update_presence(status: :dnd)
