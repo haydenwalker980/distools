@@ -17,3 +17,5 @@ nameBotOwners = "Bot Developer"
 nameBotManagers = "Bot Manager"
 # CS supervisor (botSupervisor)
 nameBotSupervisors = "Support Team Supervisor"
+# Privileged User
+nameTUser = "Privileged User"

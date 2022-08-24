@@ -9,7 +9,7 @@ module BotPerms
 	# Give this to only you - anyone with an ID in this list can run Bash commands on your machine!! 	#
 	EXECUSERS = [393971637642461185]								 	#
 	# The blacklist, enter User IDs here. Might be migrated to the database soon. Idfk.		 	#
-	BLACKLISTED = []										 	#
+	BLACKLISTED = [901917112161955930,980690782199640074]						 	#
 	# Owner, but less permissive									 	#
 	BOTMGMT = []											 	#
 	# Customer Support team										 	#
@@ -19,5 +19,6 @@ module BotPerms
 	# Users with permission to run commands preceding with "dist.beta.", essentially the Beta Testers	#
 	# Put you and your alts in here as well as experienced users :)						#
 	BETATESTERS = [393971637642461185]									#
+	TUSERS = [393971637642461185]										#
 	#########################################################################################################
 end
