@@ -19,6 +19,6 @@ module BotPerms
 	# Users with permission to run commands preceding with "dist.beta.", essentially the Beta Testers	#
 	# Put you and your alts in here as well as experienced users :)						#
 	BETATESTERS = [393971637642461185]									#
-	TUSERS = [393971637642461185,734740501798060092]							#
+	TUSERS = [393971637642461185,734740501798060092,877600052334452789]					#
 	#########################################################################################################
 end

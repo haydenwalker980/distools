@@ -263,7 +263,13 @@ client.slash("say", "Get me to say something", {
 if BotPerms::BLACKLISTED.include?(interaction.user.id) === true
   interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 else
+ if text.include?("@here")
+   interaction.post("Hey wait a minute thats not nice of you", ephemeral: false)
+ elsif text.include?("@everyone")
+   interaction.post("I cannot have you waking someone up sorry bud", ephemeral: false)
+ else
   interaction.post("#{text}\n\n- <@#{interaction.user.id}>", ephemeral: false)
+ end
 end
 end
 
@@ -309,8 +315,14 @@ client.slash("tsay", "Say something without attributing it to you. For...reasons
 if BotPerms::BLACKLISTED.include?(interaction.user.id) === true
   interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
 else
- if BotPerms::TUSERS.include?(interaction.user.id) === true
+if BotPerms::TUSERS.include?(interaction.user.id) === true
+ if text.include?("@here")
+   interaction.post("Hey wait a minute thats not nice of you", ephemeral: false)
+ elsif text.include?("@everyone")
+   interaction.post("I cannot have you waking someone up sorry bud", ephemeral: false)
+ else
    interaction.post("#{text}", ephemeral: false)
+ end
  else
    interaction.post("Hey buddy you aren't listed as someone that can use this command but you tried to use this command and that's not exactly cool please don't do that again", ephemeral: true)
  end
@@ -329,6 +341,12 @@ else
 	interaction.post("I refuse.", ephemeral: false)
 end
 end
+
+client.slash("brainpower", "LET THE BASS KICK") do |interaction|
+interaction.post("O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A- JO-ooo-oo-oo-oo EEEEO-A-AAA-AAAA")
+end
+
+
 client.once :standby do
   puts "ight its go time!! logged in as #{client.user}"  # Prints username of logged in user
   client.update_presence(status: :dnd)
