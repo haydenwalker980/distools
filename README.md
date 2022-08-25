@@ -7,11 +7,19 @@ Distools is undergoing a massive rewrite. It'll still be open source, it'll just
 
 ## Development Quickstart
 
-- You need Discorb installed, `gem install discorb`
+### Dependencies
+- MongoDB
+- Bundler
+- Ruby 3.0.0 (`rvm` recommended)
+- A decent computer
+- Discorb
+
+### Hosting
 - Run `bundle install`
+- It is recommended to also run `gem install discorb`
 - Copy .env.sample to .env, and fill in the values (only TOKEN and ID are required)
-- After that, `discorb setup`.
-- Modify `main.rb` and its variables (soon to be config/names.rb, config/perms.rb) to what you want
+- If you installed discorb via gem, run `discorb setup`, otherwise if you installed via Bundler, run `bundle exec discorb setup`
+- Modify `main.rb` and the files in `config/` to your values
 - `bin/start` and enjoy.
 
 ## Code of Conduct
