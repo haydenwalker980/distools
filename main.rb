@@ -1,7 +1,3 @@
-# distools: useful discord utilities in bot form, written in ruby with love
-# by the Windev Systems Foundation
-# 
-# help: hwalker@windevstudios.com
 require "discorb"
 require "dotenv"
 require "etc"
