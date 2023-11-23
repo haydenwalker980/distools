@@ -8,7 +8,4 @@ module DistoolsGuilds
   TESTGUILD = 
   # BETAGUILDS, array (int). guilds where beta commands are enabled.
   BETAGUILDS = []
-  # BLACKLISTEDGUILDS, array (int). guilds where distools is disabled.
-  # ** PUT IN GUILD IDS, NOT USER IDS **
-  BLACKLISTEDGUILDS = []
 end
