@@ -130,19 +130,52 @@ client.slash("help", "gives you my commands") do |interaction|
 end
 end
 
+client.slash("eval", "evaluates ruby code", {
+  "code" => { 
+    required: true,
+    type: :string,
+    description: "The code to evaluate"
+  }
+}) do |interaction, code|
+  unless BotPerms::BOTOWNERS.include?(message.author.id)
+    interaction.post(embed: Discorb::Embed.new("Haha, nice try", "This command is restricted to the bot owner.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: true)
+    next
+  end
+  if EvalSettings::BANNEDFUNCS_ETHICS.include?(code)
+    interaction.post(embed: Discorb::Embed.new("Woah woah woah", "That function is disabled due to the possibility for bot owners to abuse it for their own benefit. Remove this from `BANNEDFUNCS_ETHICS`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: true)
+    next
+  end
+else
+  res = eval("Async { |task| #{code} }.wait", binding, __FILE__, __LINE__) # rubocop:disable Security/Eval
+  unless res.nil?
+    res = res.wait if res.is_a? Async::Task
+    interaction.post("```rb\n#{res.inspect[...1990]}\n```")
+  end
+rescue Exception => e # rubocop:disable Lint/RescueException
+  interaction.post(embed: Discorb::Embed.new("Do you smell something burning?", "An error occurred! Something may have been wrong with your code snippet.\n```rb\n#{e.full_message(highlight: false)[...1990]}\n```", color: Discorb::Color[:red]), ephemeral: true)
+end
 # client.on :guild_join do |message|
 
 # Eval command maybe?
 client.on :message do |message|
-#  puts "Message in #{message.guild.name} (#{message.guild.id}) from #{message.author.name} (#{message.author.id}): #{message.content}"
+  if Prefs::SUPERSPY === true
+    puts "Message in #{message.guild.name} (#{message.guild.id}) from #{message.author.name} (#{message.author.id}): #{message.content}"
+  end
+=begin
+  Converted to slash command. This is kept here for reference.
   next if message.author.bot?
   next unless message.content.start_with?("dist.eval ")
   unless BotPerms::BOTOWNERS.include?(message.author.id)
     message.reply embed: Discorb::Embed.new("Uhhh", "No.", color: Discorb::Color.from_rgb(201, 0, 0))
     next
   end
-
+  next if message.content.delete_prefix("dist.eval ").delete_prefix("```rb").delete_suffix("```").empty?
   code = message.content.delete_prefix("dist.eval ").delete_prefix("```rb").delete_suffix("```")
+  if EvalSettings::BANNEDFUNCS_ETHICS.include?(code)
+    message.reply embed: Discorb::Embed.new("Woah woah woah", "That function is disabled due to the possibility for bot owners to abuse it for their own benefit. Remove this from `BANNEDFUNCS_ETHICS`", color: Discorb::Color.from_rgb(201, 0, 0))
+    next
+  end
+else
   message.add_reaction(Discorb::UnicodeEmoji["clock3"])
   res = eval("Async { |task| #{code} }.wait", binding, __FILE__, __LINE__) # rubocop:disable Security/Eval
   message.remove_reaction(Discorb::UnicodeEmoji["clock3"])
@@ -152,8 +185,11 @@ client.on :message do |message|
     message.channel.post("```rb\n#{res.inspect[...1990]}\n```")
   end
 rescue Exception => e # rubocop:disable Lint/RescueException
+  message.remove_reaction(Discorb::UnicodeEmoji["white_check_mark"])
+  message.add_reaction(Discorb::UnicodeEmoji["x"])
   message.reply embed: Discorb::Embed.new("Do you smell something burning?", "An error occurred! Something may have been wrong with your code snippet.\n```rb\n#{e.full_message(highlight: false)[...1990]}\n```",
                                           color: Discorb::Color[:red])
+=end
 end
 
 client.on :message do |message|
