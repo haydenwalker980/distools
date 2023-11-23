@@ -23,3 +23,11 @@
 ## [2.0] - 2022-05-22
 - MongoDB connection
 - **BREAKING CHANGE:** config/perms.rb hosts permissions config, instead of main.rb (via a module that has a sh*t ton of variables.
+
+## [2.1.0] - 2023-11-22
+Happy 1st 1/2 bday to Distools.
+- Modify upstream commit
+- Add new settings (eval filter, spy mode)
+- Slashify multiple commands
+- Add guild blacklist functionality
+- Removed brainpower
