@@ -163,7 +163,7 @@ client.slash("eval", "evaluates ruby code (owner-only)", {
     description: "The code to evaluate"
   }
 }) do |interaction, code|
-  unless BotPerms::BOTOWNERS.include?(message.author.id)
+  unless BotPerms::BOTOWNERS.include?(interaction.user.id)
     interaction.post(embed: Discorb::Embed.new("Haha, nice try", "This command is restricted to the bot owner.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: true)
     next
   end
@@ -171,14 +171,11 @@ client.slash("eval", "evaluates ruby code (owner-only)", {
     interaction.post(embed: Discorb::Embed.new("Woah woah woah", "That function is disabled due to the possibility for bot owners to abuse it for their own benefit. Remove this from `BANNEDFUNCS_ETHICS`", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: true)
     next
   end
-else
   res = eval("Async { |task| #{code} }.wait", binding, __FILE__, __LINE__) # rubocop:disable Security/Eval
   unless res.nil?
     res = res.wait if res.is_a? Async::Task
     interaction.post("```rb\n#{res.inspect[...1990]}\n```")
   end
-rescue Exception => e # rubocop:disable Lint/RescueException
-  interaction.post(embed: Discorb::Embed.new("Do you smell something burning?", "An error occurred! Something may have been wrong with your code snippet.\n```rb\n#{e.full_message(highlight: false)[...1990]}\n```", color: Discorb::Color[:red]), ephemeral: true)
 end
 # client.on :guild_join do |message|
 
@@ -216,18 +213,6 @@ rescue Exception => e # rubocop:disable Lint/RescueException
   message.reply embed: Discorb::Embed.new("Do you smell something burning?", "An error occurred! Something may have been wrong with your code snippet.\n```rb\n#{e.full_message(highlight: false)[...1990]}\n```",
                                           color: Discorb::Color[:red])
 =end
-end
-
-client.on :message do |message|
-  next if message.author.bot?
-  next unless message.content.start_with?("dist.beta.DocTest")
-  unless BotPerms::BETATESTERS.include?(message.author.id) or GuildLevels::BETAGUILDS.include?(message.guild.id)
-     message.reply embed: Discorb::Embed.new("Error", "you are not a `BotPerms::BETATESTER`. if you know Ruby and Mongo, contact #{DistoolsStr::BCP} in order to become one of the `BotPerms::BETATESTERS`.", color: Discorb::Color.from_rgb(201, 0, 0))
-     next
-  end
-  
-  
-  message.reply embed: Discorb::Embed.new("Fun, an unfinished command!", "you are a `BotPerms::BETATESTER` but like this command is so unfinished that it would likely make the bot commit suicide if you ran this command so I won't let you run it. it will be finished soon as a functioning economy is one of my top priorities for this bot.", color: Discorb::Color.from_rgb(201, 0, 0))
 end
 
 client.on :message do |message|
