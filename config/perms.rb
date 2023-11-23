@@ -12,6 +12,7 @@ module BotPerms
 	# Side note if you're blacklisted on all instances by default you've fucked up bigtime
 	BLACKLISTED = [901917112161955930,980690782199640074,1079587863529783408]
 	# Guild-level blacklist
+	BLACKLISTEDGUILDS = []
 	# Owner, but less permissive
 	BOTMGMT = []
 	# Customer Support team
