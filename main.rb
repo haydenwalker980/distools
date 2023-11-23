@@ -407,17 +407,12 @@ client.once :standby do
 end
 
 # I pray this works.
-client.slash("timeout", "Timeout someone", {
+client.slash("ban", "Banana someone", {
 	"target" => {
 	 required: true,
 	 type: :user,
-	 description: "The person to timeout."
+	 description: "The person to ban."
 	},
-        "time" => {
-         required: true,
-         type: :int,
-         description: "The amount of time (IN SECONDS) to time them out for"
-        },
 	"reason" => {
 	 required: false,
 	 type: :string,
