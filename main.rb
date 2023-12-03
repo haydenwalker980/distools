@@ -449,7 +449,7 @@ client.slash("christmas", "How many days until Christmas?") do |interaction|
   elsif days == 69
     interaction.post("There are 69 days until Christmas! :smirk:")
   elsif warnUser == 4
-    interaction.post("There are :warning: #{days} days until Christmas!")
+    interaction.post("There are :warning: until Christmas!")
   else
     interaction.post("There are #{days} days until Christmas!")
   end
