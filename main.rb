@@ -452,6 +452,7 @@ client.slash("christmas", "How many days until Christmas?") do |interaction|
     interaction.post("There are :warning: until Christmas!")
   else
     interaction.post("There are #{days} days until Christmas!")
+  end
 end
 # -- End Christmas Countdown joke snippet. --
 
