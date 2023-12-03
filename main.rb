@@ -436,4 +436,23 @@ else
 end
 end
 
+# -- Begin Christmas Countdown joke snippet. --
+client.slash("christmas", "How many days until Christmas?") do |interaction|
+  christmas = Time.new(2021, 12, 25)
+  today = Time.now
+  days = (christmas - today).to_i / 86400
+  warnUser = rand(1..4)
+  if days <= 0
+    interaction.post("It's Christmas! :christmas_tree:")
+  elsif days == 1
+    interaction.post("It's Christmas Eve! :christmas_tree:")
+  elsif days == 69
+    interaction.post("There are 69 days until Christmas! :smirk:")
+  elsif warnUser = 4
+    interaction.post("There are :warning: until Christmas!")
+  else
+    interaction.post("There are #{days} days until Christmas!")
+end
+# -- End Christmas Countdown joke snippet. --
+
 client.run ENV["TOKEN"]  # Starts client
