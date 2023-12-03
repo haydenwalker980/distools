@@ -455,4 +455,5 @@ client.slash("christmas", "How many days until Christmas?") do |interaction|
 end
 # -- End Christmas Countdown joke snippet. --
 
-client.run ENV["TOKEN"]  # Starts client
+# Starts client
+client.run ENV["TOKEN"]
