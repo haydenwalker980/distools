@@ -38,6 +38,10 @@ botVersion = "2.1.0 RW"
 commit = `git rev-parse --short HEAD`
 commitMsg = `git show-branch --no-name`
 
+# stray PID removal
+system("rm distools.pid")
+puts "Stray PID files removed"
+
 File.foreach("index.txt") { |line| puts line }
 puts "loaded bot owners: #{BotPerms::BOTOWNERS}"
 puts "loaded blacklist: #{BotPerms::BLACKLISTED}"
@@ -75,6 +79,7 @@ end
 
 client.on :ready do
   client.update_presence(status: :dnd)
+  system("touch distools.pid")
 end
 
 # Application commands
@@ -137,12 +142,15 @@ end
 end
 
 client.slash("hello", "bot stats") do |interaction|
+ uptimePD = `echo $(($(date +%s) - $(date -r distools.pid +%s)))`
+ uptime = Time.at(uptimePD.to_i).utc.strftime('%H:%M:%S')
+ srvup = `uptime -p`
  if BotPerms::BLACKLISTED.include?(interaction.user.id) === true
 	interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
  elsif BotPerms::BLACKLISTEDGUILDS.include?(interaction.guild.id) === true
   interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nThis guild has been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
  else
-  interaction.post(embed: Discorb::Embed.new("distools #{botVersion} | hello world :)", "I am Distools, a bot made by Winfinity\#1252.", color: Discorb::Color.from_rgb(201, 0, 0), fields: [Discorb::Embed::Field.new("ruby ver", "`#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}`", inline: false), Discorb::Embed::Field.new("discorb ver", "`#{Discorb::VERSION}`", inline: false), Discorb::Embed::Field.new("OS", "`#{uname[:sysname]} #{uname[:release]}`", inline: false), Discorb::Embed::Field.new("running as user", "`#{systemUsername}`", inline: false)]), ephemeral: false)
+  interaction.post(embed: Discorb::Embed.new("distools #{botVersion} | hello world :)", "I am Distools, a bot made by Winfinity\#1252.", color: Discorb::Color.from_rgb(201, 0, 0), fields: [Discorb::Embed::Field.new("ruby ver", "`#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}`", inline: false), Discorb::Embed::Field.new("discorb ver", "`#{Discorb::VERSION}`", inline: false), Discorb::Embed::Field.new("OS", "`#{uname[:sysname]} #{uname[:release]}`", inline: false), Discorb::Embed::Field.new("running as user", "`#{systemUsername}`", inline: false), Discorb::Embed::Field.new("Uptime", "Bot up for #{uptime}, server #{srvup}"]), ephemeral: false)
 end
 end
 
