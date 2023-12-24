@@ -125,7 +125,7 @@ end
 client.slash("garment", "garment") do |interaction|
  if BotPerms::BLACKLISTED.include?(interaction.user.id) === true
   interaction.post("this is a certified not garment moment", embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nYou have been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)))
- elsif BotPerms::BLACKLISTEDGUILDS.include?(interaction.guild.id) === true
+ elsif BotPerms::BLACKLISTEDGUILDS.include?(interaction.guild.id) === true and message.channel.is_a?(Discorb::DMChannel) === false 
   interaction.post(embed: Discorb::Embed.new("A critical exception has occurred.", "The command returned the following error:\nThis guild has been blacklisted from distools. Please contact #{DistoolsStr::BCP} if you believe this was in error.", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
  else
 	interaction.post("garment", embed: Discorb::Embed.new("garment", "garment", color: Discorb::Color.from_rgb(201, 0, 0)), ephemeral: false)
