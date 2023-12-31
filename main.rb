@@ -450,7 +450,10 @@ client.slash("christmas", "How many days until Christmas?") do |interaction|
   today = Time.now
   days = ((christmas - today) / 86400).to_i
   warnUser = rand(1..4)
-  if days <= 0
+  
+  if ((Time.new(Time.now.year, 12, 25)-Time.now) / 86400).to_s.slice!(0) == "-"
+    interaction.post("#{((Time.new(Time.now.year, 12, 25)-Time.now) / 86400).to_s.slice!(1)} days have passed since Christmas.")
+  elsif days == 0
     interaction.post("It's Christmas! :christmas_tree:")
   elsif days == 1
     interaction.post("It's Christmas Eve! :christmas_tree:")
@@ -460,8 +463,6 @@ client.slash("christmas", "How many days until Christmas?") do |interaction|
     interaction.post("There are :warning: until Christmas!")
   elsif warnUser == 2
     interaction.post("There are :warning: until Christmas!")
-  elsif ((Time.new(Time.now.year, 12, 25)-Time.now) / 86400).to_s.slice!(0) == "-"
-    interaction.post("#{((Time.new(Time.now.year, 12, 25)-Time.now) / 86400).to_s.slice!(1)} days have passed since Christmas.")
   else
     interaction.post("There are #{days} days until Christmas!")
   end
